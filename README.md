@@ -7,7 +7,8 @@
 - `declarativeNetRequest` 동적 룰을 사용합니다. MV3에서 `webRequest` 차단이 금지되었기 때문에 스토어 배포 가능한 유일한 차단 방식입니다.
 - 필터는 `chrome.storage.sync`에 저장되어 같은 계정의 다른 기기와 동기화됩니다.
 - 서비스워커(`background.js`)가 스토리지 변경을 감지해 동적 룰을 다시 빌드합니다.
-- 툴바 배지에 활성 필터 개수(비활성화 시 `OFF`)가 표시됩니다.
+- 툴바 배지에 **현재 탭에서 차단된 요청 수**가 표시됩니다 (전역 비활성화 시 `OFF`).
+  - MV3 DNR은 차단 콜백이 없어(`onRuleMatchedDebug`는 개발 모드 전용) 비차단 `webRequest`로 `net::ERR_BLOCKED_BY_CLIENT` 이벤트를 관찰해 셉니다. 이 때문에 `webRequest` + `<all_urls>` 호스트 권한이 필요합니다.
 
 ## 필터 편집
 
@@ -59,7 +60,7 @@ https://foo.com/tracker*
 4. **대시보드에서 새 항목 생성** → zip 업로드
 5. **스토어 등록정보**: [`STORE_LISTING.md`](STORE_LISTING.md)의 문구 복붙. 스크린샷 1280×800 최소 1장
 6. **개인정보 보호 탭**: 권한 사유 3개 + 데이터 미수집 선언 — 역시 `STORE_LISTING.md` 참고
-7. **심사 제출**: 보통 1~3일. 호스트 권한이 없어 심사 빠른 편
+7. **심사 제출**: 보통 1~3일. `<all_urls>` 호스트 권한 때문에 심층 심사로 분류될 수 있음 — 권한 사유를 명확히 쓰면 통과에 문제 없음. 배지 카운터를 포기하면 `webRequest`/호스트 권한을 빼고 심사를 빠르게 할 수도 있음
 
 버전 올릴 때: `manifest.json`의 `version` 수정 → `./package.sh` → 대시보드에 새 zip 업로드.
 

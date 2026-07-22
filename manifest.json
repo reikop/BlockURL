@@ -5,7 +5,8 @@
   "version": "1.0.0",
   "default_locale": "ko",
   "minimum_chrome_version": "121",
-  "permissions": ["declarativeNetRequest", "storage", "activeTab"],
+  "permissions": ["declarativeNetRequest", "storage", "activeTab", "webRequest"],
+  "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js",
     "type": "module"
