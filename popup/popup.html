@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <h1 data-i18n="extName">BlockURL</h1>
+    <label class="switch" title="">
+      <input type="checkbox" id="global-toggle" />
+      <span class="slider"></span>
+    </label>
+  </header>
+
+  <section id="current-site" hidden>
+    <div class="domain-row">
+      <span id="current-domain"></span>
+      <button id="block-current" data-i18n="blockThisSite">이 사이트 차단</button>
+    </div>
+  </section>
+
+  <section>
+    <form id="add-form">
+      <input
+        type="text"
+        id="pattern-input"
+        data-i18n-placeholder="patternPlaceholder"
+        placeholder="example.com 또는 *ads*"
+        autocomplete="off"
+      />
+      <button type="submit" data-i18n="add">추가</button>
+    </form>
+    <p id="error" class="error" hidden></p>
+  </section>
+
+  <ul id="filter-list"></ul>
+  <p id="empty" class="empty" data-i18n="noFilters" hidden>등록된 필터가 없습니다.</p>
+
+  <footer>
+    <a href="#" id="open-options" data-i18n="manageFilters">필터 관리</a>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

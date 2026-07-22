@@ -1,0 +1,20 @@
+{
+  "extName": { "message": "BlockURL" },
+  "extDesc": { "message": "Blocks network requests to URLs matching your filters. Supports domains and wildcard patterns." },
+  "blockThisSite": { "message": "Block this site" },
+  "add": { "message": "Add" },
+  "remove": { "message": "Remove" },
+  "noFilters": { "message": "No filters yet." },
+  "manageFilters": { "message": "Manage filters" },
+  "patternPlaceholder": { "message": "example.com or *ads*" },
+  "patternHelp": { "message": "Entering a domain (example.com) blocks it and all subdomains. Wildcard URL patterns (*ads*, https://foo.com/tracker*) are also supported." },
+  "optionsTitle": { "message": "Manage filters" },
+  "editorHelp": { "message": "One pattern per line. Prefix a line with # to disable that filter. Changes apply on Save (Ctrl/Cmd+S)." },
+  "editorPlaceholder": { "message": "example.com\n*ads*\n# tracker.com  ← disabled filter" },
+  "save": { "message": "Save" },
+  "saveDone": { "message": "$1 filters applied" },
+  "unsaved": { "message": "Unsaved changes" },
+  "invalidLines": { "message": "$1 invalid lines — not saved:" },
+  "errInvalid": { "message": "Invalid pattern." },
+  "errDuplicate": { "message": "Pattern already exists." }
+}

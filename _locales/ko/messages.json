@@ -1,0 +1,20 @@
+{
+  "extName": { "message": "BlockURL" },
+  "extDesc": { "message": "필터에 해당하는 URL의 네트워크 요청을 차단합니다. 도메인 또는 와일드카드 패턴을 지원합니다." },
+  "blockThisSite": { "message": "이 사이트 차단" },
+  "add": { "message": "추가" },
+  "remove": { "message": "삭제" },
+  "noFilters": { "message": "등록된 필터가 없습니다." },
+  "manageFilters": { "message": "필터 관리" },
+  "patternPlaceholder": { "message": "example.com 또는 *ads*" },
+  "patternHelp": { "message": "도메인(example.com)을 입력하면 하위 도메인까지 차단됩니다. *를 사용한 URL 패턴(*ads*, https://foo.com/tracker*)도 지원합니다." },
+  "optionsTitle": { "message": "필터 관리" },
+  "editorHelp": { "message": "한 줄에 패턴 하나씩. 줄 앞에 #을 붙이면 해당 필터는 꺼집니다. 저장(Ctrl/Cmd+S)해야 적용됩니다." },
+  "editorPlaceholder": { "message": "example.com\n*ads*\n# tracker.com  ← 꺼진 필터" },
+  "save": { "message": "저장" },
+  "saveDone": { "message": "$1개 필터 적용됨" },
+  "unsaved": { "message": "저장되지 않음" },
+  "invalidLines": { "message": "잘못된 패턴 $1줄 — 저장되지 않았습니다:" },
+  "errInvalid": { "message": "잘못된 패턴입니다." },
+  "errDuplicate": { "message": "이미 등록된 패턴입니다." }
+}

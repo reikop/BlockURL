@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>BlockURL</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <main>
+    <h1 data-i18n="optionsTitle">필터 관리</h1>
+    <p class="hint" data-i18n="patternHelp">
+      도메인(example.com)을 입력하면 하위 도메인까지 차단됩니다.
+      *를 사용한 URL 패턴(*ads*, https://foo.com/tracker*)도 지원합니다.
+    </p>
+    <p class="hint" data-i18n="editorHelp">
+      한 줄에 패턴 하나씩. 줄 앞에 #을 붙이면 해당 필터는 꺼집니다.
+    </p>
+
+    <textarea
+      id="editor"
+      rows="16"
+      spellcheck="false"
+      data-i18n-placeholder="editorPlaceholder"
+      placeholder="example.com&#10;*ads*&#10;# tracker.com  ← 꺼진 필터"
+    ></textarea>
+
+    <div class="toolbar">
+      <span id="status" class="hint status"></span>
+      <button id="save" data-i18n="save">저장</button>
+    </div>
+    <p id="invalid" class="error" hidden></p>
+  </main>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>

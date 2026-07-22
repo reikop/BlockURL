@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BlockURL — 개인정보처리방침 / Privacy Policy</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: #202124;
+      background: #f8f9fa;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    main {
+      max-width: 720px;
+      margin: 48px auto;
+      padding: 36px;
+      background: #fff;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .logo svg { flex-shrink: 0; }
+    h1 { font-size: 30px; letter-spacing: -0.02em; }
+    h2 { font-size: 19px; margin: 28px 0 8px; }
+    p, li { margin-bottom: 8px; }
+    ul { padding-left: 22px; }
+    .en { color: #5f6368; }
+    hr { border: none; border-top: 1px solid #dadce0; margin: 32px 0; }
+    footer { margin-top: 32px; font-size: 13px; color: #5f6368; }
+    a { color: #1a73e8; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="logo">
+      <svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="44" fill="none" stroke="#d93025" stroke-width="11" />
+        <line x1="19" y1="19" x2="81" y2="81" stroke="#d93025" stroke-width="11" />
+      </svg>
+      <h1>BlockURL</h1>
+    </div>
+
+    <h2>개인정보처리방침</h2>
+    <p>BlockURL은 어떠한 개인정보도 수집하지 않습니다.</p>
+    <ul>
+      <li>사용자가 등록한 차단 필터 목록은 브라우저의 <code>chrome.storage.sync</code>에만 저장되며, 이는 사용자의 Google 계정을 통한 브라우저 자체 동기화 기능입니다.</li>
+      <li>확장 프로그램은 외부 서버와 통신하지 않으며, 어떤 데이터도 외부로 전송하지 않습니다.</li>
+      <li>방문 기록, 차단 기록, 사용 통계를 수집·저장·전송하지 않습니다.</li>
+      <li>요청 차단은 Chrome의 <code>declarativeNetRequest</code> API를 통해 브라우저 내부에서만 처리됩니다.</li>
+    </ul>
+
+    <hr />
+
+    <h2 class="en">Privacy Policy (English)</h2>
+    <p class="en">BlockURL does not collect any personal data.</p>
+    <ul class="en">
+      <li>Your block-filter list is stored only in the browser's <code>chrome.storage.sync</code>, which is Chrome's built-in sync tied to your own Google account.</li>
+      <li>The extension makes no network connections of its own and transmits no data anywhere.</li>
+      <li>No browsing history, block logs, or usage statistics are collected, stored, or transmitted.</li>
+      <li>Request blocking happens entirely inside the browser via Chrome's <code>declarativeNetRequest</code> API.</li>
+    </ul>
+
+    <footer>
+      최종 수정 / Last updated: 2026-07-22 ·
+      문의 / Contact: <a href="mailto:reikop.com@gmail.com">reikop.com@gmail.com</a>
+    </footer>
+  </main>
+</body>
+</html>
