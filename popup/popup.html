@@ -7,7 +7,7 @@
 <body>
   <header>
     <h1 data-i18n="extName">BlockURL</h1>
-    <label class="switch" title="">
+    <label class="switch">
       <input type="checkbox" id="global-toggle" />
       <span class="slider"></span>
     </label>
@@ -20,25 +20,21 @@
     </div>
   </section>
 
-  <section>
-    <form id="add-form">
-      <input
-        type="text"
-        id="pattern-input"
-        data-i18n-placeholder="patternPlaceholder"
-        placeholder="example.com 또는 *ads*"
-        autocomplete="off"
-      />
-      <button type="submit" data-i18n="add">추가</button>
-    </form>
-    <p id="error" class="error" hidden></p>
+  <section class="editor-wrap">
+    <textarea
+      id="editor"
+      rows="10"
+      spellcheck="false"
+      data-i18n-placeholder="editorPlaceholder"
+      placeholder="example.com&#10;*ads*&#10;# tracker.com  ← 꺼진 필터"
+    ></textarea>
+    <p id="invalid" class="error" hidden></p>
   </section>
 
-  <ul id="filter-list"></ul>
-  <p id="empty" class="empty" data-i18n="noFilters" hidden>등록된 필터가 없습니다.</p>
-
   <footer>
+    <span id="status" class="status"></span>
     <a href="#" id="open-options" data-i18n="manageFilters">필터 관리</a>
+    <button id="save" data-i18n="save">저장</button>
   </footer>
 
   <script type="module" src="popup.js"></script>

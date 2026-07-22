@@ -1,9 +1,8 @@
 import {
   getState,
   setState,
-  addFilter,
-  removeFilter,
-  toggleFilter,
+  filtersToText,
+  parseFilterText,
 } from "../lib/filters.js";
 
 const $ = (id) => document.getElementById(id);
@@ -19,14 +18,47 @@ function localize() {
   }
 }
 
-function showError(key) {
-  const el = $("error");
-  el.textContent = chrome.i18n.getMessage(key) || key;
-  el.hidden = false;
+let saved = true;
+
+function markDirty() {
+  if (!saved) return;
+  saved = false;
+  $("status").textContent = chrome.i18n.getMessage("unsaved") || "저장되지 않음";
 }
 
-function clearError() {
-  $("error").hidden = true;
+async function load() {
+  const { enabled, filters } = await getState();
+  $("global-toggle").checked = enabled;
+  $("editor").value = filtersToText(filters);
+  saved = true;
+  $("status").textContent = "";
+}
+
+async function save() {
+  const { filters: existing } = await getState();
+  const { filters, invalidLines } = parseFilterText($("editor").value, existing);
+  await setState({ filters });
+
+  $("editor").value =
+    filtersToText(filters) +
+    (invalidLines.length ? "\n" + invalidLines.join("\n") : "");
+
+  const invalid = $("invalid");
+  if (invalidLines.length) {
+    invalid.textContent =
+      (chrome.i18n.getMessage("invalidLines", [String(invalidLines.length)]) ||
+        `잘못된 패턴 ${invalidLines.length}줄 — 저장되지 않았습니다:`) +
+      " " +
+      invalidLines.join(", ");
+    invalid.hidden = false;
+  } else {
+    invalid.hidden = true;
+  }
+
+  saved = true;
+  $("status").textContent =
+    chrome.i18n.getMessage("saveDone", [String(filters.length)]) ||
+    `${filters.length}개 필터 적용됨`;
 }
 
 async function currentTabDomain() {
@@ -41,46 +73,6 @@ async function currentTabDomain() {
   }
 }
 
-async function render() {
-  const { enabled, filters } = await getState();
-  $("global-toggle").checked = enabled;
-
-  const list = $("filter-list");
-  list.textContent = "";
-  $("empty").hidden = filters.length > 0;
-
-  // Storage order matches the options-page editor, so keep it.
-  for (const filter of filters) {
-    const li = document.createElement("li");
-    li.classList.toggle("disabled", !filter.enabled);
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = filter.enabled;
-    checkbox.addEventListener("change", async () => {
-      await toggleFilter(filter.id, checkbox.checked);
-      render();
-    });
-
-    const span = document.createElement("span");
-    span.className = "pattern";
-    span.textContent = filter.pattern;
-    span.title = filter.pattern;
-
-    const remove = document.createElement("button");
-    remove.className = "remove";
-    remove.textContent = "✕";
-    remove.title = chrome.i18n.getMessage("remove") || "삭제";
-    remove.addEventListener("click", async () => {
-      await removeFilter(filter.id);
-      render();
-    });
-
-    li.append(checkbox, span, remove);
-    list.append(li);
-  }
-}
-
 async function init() {
   localize();
 
@@ -88,14 +80,15 @@ async function init() {
   if (domain) {
     $("current-domain").textContent = domain;
     $("current-site").hidden = false;
+    // Adds the domain as a new line in the editor and saves everything,
+    // so the button works with or without pending edits.
     $("block-current").addEventListener("click", async () => {
-      clearError();
-      try {
-        await addFilter(domain);
-        render();
-      } catch (e) {
-        showError(e.message === "duplicate-pattern" ? "errDuplicate" : "errInvalid");
+      const editor = $("editor");
+      const lines = editor.value.split("\n").map((l) => l.trim());
+      if (!lines.includes(domain)) {
+        editor.value = domain + (editor.value.trim() ? "\n" + editor.value : "");
       }
+      await save();
     });
   }
 
@@ -103,17 +96,13 @@ async function init() {
     await setState({ enabled: e.target.checked });
   });
 
-  $("add-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    clearError();
-    const input = $("pattern-input");
-    if (!input.value.trim()) return;
-    try {
-      await addFilter(input.value);
-      input.value = "";
-      render();
-    } catch (err) {
-      showError(err.message === "duplicate-pattern" ? "errDuplicate" : "errInvalid");
+  $("editor").addEventListener("input", markDirty);
+  $("save").addEventListener("click", save);
+
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+      e.preventDefault();
+      save();
     }
   });
 
@@ -122,7 +111,13 @@ async function init() {
     chrome.runtime.openOptionsPage();
   });
 
-  render();
+  // Reflect global toggle / changes from the options page, but never
+  // clobber unsaved edits in the textarea.
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === "sync" && (changes.filters || changes.enabled) && saved) load();
+  });
+
+  load();
 }
 
 init();

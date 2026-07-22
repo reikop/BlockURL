@@ -12,7 +12,7 @@
 }
 
 body {
-  width: 340px;
+  width: 360px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-size: 13px;
   color: #202124;
@@ -111,21 +111,24 @@ button:hover {
   border-color: var(--red);
 }
 
-#add-form {
-  display: flex;
-  gap: 6px;
-  padding: 10px 14px;
+.editor-wrap {
+  padding: 10px 14px 0;
 }
 
-#pattern-input {
-  flex: 1;
-  font: inherit;
-  padding: 5px 8px;
+#editor {
+  width: 100%;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 4px;
+  resize: vertical;
+  min-height: 120px;
+  max-height: 400px;
 }
 
-#pattern-input:focus {
+#editor:focus {
   outline: 2px solid var(--red);
   outline-offset: -1px;
   border-color: transparent;
@@ -133,65 +136,36 @@ button:hover {
 
 .error {
   color: var(--red);
-  padding: 0 14px 8px;
-}
-
-#filter-list {
-  list-style: none;
-  max-height: 240px;
-  overflow-y: auto;
-  border-top: 1px solid var(--border);
-}
-
-#filter-list li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 14px;
-  border-bottom: 1px solid var(--bg-subtle);
-}
-
-#filter-list .pattern {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-family: ui-monospace, Menlo, monospace;
-  font-size: 12px;
-}
-
-#filter-list li.disabled .pattern {
-  color: var(--gray);
-  text-decoration: line-through;
-}
-
-.remove {
-  border: none;
-  background: none;
-  color: var(--gray);
-  font-size: 15px;
-  line-height: 1;
-  padding: 2px 4px;
-}
-
-.remove:hover {
-  color: var(--red);
-  background: none;
-}
-
-.empty {
-  padding: 14px;
-  color: var(--gray);
-  text-align: center;
+  padding: 6px 0 0;
 }
 
 footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 10px 14px;
-  border-top: 1px solid var(--border);
-  text-align: right;
+}
+
+.status {
+  flex: 1;
+  color: var(--gray);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 footer a {
   color: #1a73e8;
   text-decoration: none;
+}
+
+#save {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  padding: 5px 16px;
+}
+
+#save:hover {
+  background: #b3261e;
 }
