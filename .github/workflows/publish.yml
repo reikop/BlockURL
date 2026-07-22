@@ -1,0 +1,45 @@
+name: Publish to Chrome Web Store
+
+# Publishes when a version tag is pushed, e.g.:
+#   git tag v1.0.1 && git push origin v1.0.1
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   CWS_EXTENSION_ID   — item ID from the Web Store dashboard URL
+#   CWS_CLIENT_ID      — OAuth client ID  (Google Cloud Console)
+#   CWS_CLIENT_SECRET  — OAuth client secret
+#   CWS_REFRESH_TOKEN  — OAuth refresh token with chromewebstore scope
+# Setup guide: https://github.com/fregante/chrome-webstore-upload-keys
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches manifest version
+        run: |
+          MANIFEST_VERSION=$(python3 -c "import json; print(json.load(open('manifest.json'))['version'])")
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          if [ "$MANIFEST_VERSION" != "$TAG_VERSION" ]; then
+            echo "Tag $TAG_VERSION does not match manifest version $MANIFEST_VERSION" >&2
+            exit 1
+          fi
+
+      - name: Build zip
+        run: ./package.sh
+
+      - name: Upload and publish
+        run: |
+          npx --yes chrome-webstore-upload-cli@3 upload \
+            --source dist/blockurl-*.zip \
+            --auto-publish
+        env:
+          EXTENSION_ID: ${{ secrets.CWS_EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}

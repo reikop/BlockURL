@@ -62,7 +62,21 @@ https://foo.com/tracker*
 6. **개인정보 보호 탭**: 권한 사유 3개 + 데이터 미수집 선언 — 역시 `STORE_LISTING.md` 참고
 7. **심사 제출**: 보통 1~3일. `<all_urls>` 호스트 권한 때문에 심층 심사로 분류될 수 있음 — 권한 사유를 명확히 쓰면 통과에 문제 없음. 배지 카운터를 포기하면 `webRequest`/호스트 권한을 빼고 심사를 빠르게 할 수도 있음
 
-버전 올릴 때: `manifest.json`의 `version` 수정 → `./package.sh` → 대시보드에 새 zip 업로드.
+### 업데이트 자동 배포 (첫 배포 이후)
+
+첫 배포가 끝나면 이후 버전은 태그 푸시로 자동 배포됩니다 (`.github/workflows/publish.yml`):
+
+1. [chrome-webstore-upload-keys 가이드](https://github.com/fregante/chrome-webstore-upload-keys)대로 OAuth 클라이언트 ID/시크릿/리프레시 토큰 발급
+2. GitHub 레포 Settings → Secrets → Actions에 등록:
+   `CWS_EXTENSION_ID`(대시보드의 항목 ID), `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN`
+3. 배포:
+   ```sh
+   # manifest.json의 version 수정 후
+   git tag v1.0.1 && git push origin v1.0.1
+   ```
+   태그와 manifest 버전이 다르면 워크플로가 실패하도록 검사함.
+
+수동 배포: `manifest.json`의 `version` 수정 → `./package.sh` → 대시보드에 새 zip 업로드.
 
 ## 파일 구조
 
