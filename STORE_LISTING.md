@@ -52,8 +52,7 @@ No data is collected. All blocking happens inside the browser via the declarativ
 
 - **원격 코드 사용**: 아니요 (No remote code)
 - **데이터 수집**: 없음 (선언: 사용자 데이터를 수집하거나 사용하지 않습니다)
-- **개인정보처리방침 URL**: `https://<github-username>.github.io/<repo-name>/`
-  (GitHub Pages 활성화 후 실제 URL로 교체)
+- **개인정보처리방침 URL**: https://reikop.github.io/BlockURL/
 
 ## 스크린샷 체크리스트
 
